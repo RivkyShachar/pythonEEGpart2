@@ -1,3 +1,4 @@
+import LDAfunc
 import statisticsFunc
 
 import fastica
@@ -17,23 +18,29 @@ def readDataFromFileAndNormy(file1, numOfQuestions=20):
     return data
 
 
-def callFastICA(data, numOfQuestions):
+def callFastICA(data, numOfQuestions=20):
     for i in range(numOfQuestions):
         data[i] = data[i]  # need to do here fast ica
     return data
 
 
-def statisticalFeatures(data, numOfQuestions):
+def statisticalFeatures(data, numOfQuestions=20):
     for i in range(numOfQuestions):
         for j in range(NUM_OF_ELECTRODES):
             data[i][j] = statisticsFunc.features(data[i][j])
 
+def callLDA(data, numOfQuestions=20):
+    for i in range(numOfQuestions):
+        for j in range(NUM_OF_ELECTRODES):
+            data[i][j] = LDAfunc.doLDA(data[i][j])
+
 
 def main(fileName, numOfQuestions=20):
     file1 = open(fileName, 'r')
-    data = readDataFromFileAndNormy(file1, numOfQuestions)
+    data = readDataFromFileAndNormy(file1)
     file1.close()
-    data = callFastICA(data, numOfQuestions)
+    data = callFastICA(data)
+    data=statisticalFeatures(data)
 
 
 if __name__ == '__main__':

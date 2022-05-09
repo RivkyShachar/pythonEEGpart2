@@ -1,4 +1,4 @@
-from statisticsFunc import mean
+from statistics import mean
 
 from numpy import std
 
