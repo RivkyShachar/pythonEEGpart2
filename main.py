@@ -1,29 +1,43 @@
+import statisticsFunc
+
 import fastica
 
 import fumc
-NUM_OF_ELECTRODES=14
 
-def readDataFromFileAndNormy(file1,numOfQuestions=20):
-    data=[[]]*numOfQuestions
+NUM_OF_ELECTRODES = 14
+NUM_OF_VALUES_FOR_EACH_ELEC = 512
+
+
+def readDataFromFileAndNormy(file1, numOfQuestions=20):
+    data = [[[]] * NUM_OF_ELECTRODES] * numOfQuestions
     for i in range(numOfQuestions):
         for j in range(NUM_OF_ELECTRODES):
-            data[i][j]=file1.readline()
-            data[i][j]=fumc.normy(data[i][j])
+            data[i][j] = file1.readline()
+            data[i][j] = fumc.normy(data[i][j])
     return data
 
-def callFastICA(data):
-    data=data #temp
+
+def callFastICA(data, numOfQuestions):
+    for i in range(numOfQuestions):
+        data[i] = data[i]  # need to do here fast ica
+    return data
 
 
-def main(fileName,numOfQuestions=20):
-    file1=open(fileName,'r')
-    data=readDataFromFileAndNormy(file1,numOfQuestions)
+def statisticalFeatures(data, numOfQuestions):
+    for i in range(numOfQuestions):
+        for j in range(NUM_OF_ELECTRODES):
+            data[i][j] = statisticsFunc.features(data[i][j])
+
+
+def main(fileName, numOfQuestions=20):
+    file1 = open(fileName, 'r')
+    data = readDataFromFileAndNormy(file1, numOfQuestions)
     file1.close()
-    callFastICA(data)
+    data = callFastICA(data, numOfQuestions)
 
 
 if __name__ == '__main__':
-    fileName="recording.csv"
+    fileName = "recording.csv"
     main(fileName)
 """
 # we have a file with the data
@@ -76,3 +90,25 @@ for i in range(NumOfRunning):
         val_marker = marker(index1);
 """
 
+'''
+%% Statistical features extraction 
+num_features = 10; 
+num_question_eff = num_question;
+CLIS_features = zeros(num_question_eff*num_electrodes,num_features);
+j=1;
+k=1;
+for i=1:num_question_eff*num_electrodes
+        CLIS_features(k,1) = min(CLIS_answers(j,1:end-1));
+        CLIS_features(k,2) = var(CLIS_answers(j,1:end-1));
+        CLIS_features(k,3) = max(CLIS_answers(j,1:end-1));
+        CLIS_features(k,4) = mean(CLIS_answers(j,1:end-1));
+        CLIS_features(k,5) = skewness(CLIS_answers(j,1:end-1));
+        CLIS_features(k,6) = prctile(CLIS_answers(j,1:end-1),25);
+        CLIS_features(k,7) = prctile(CLIS_answers(j,1:end-1),50);
+        CLIS_features(k,8) = iqr(CLIS_answers(j,1:end-1));
+        CLIS_features(k,9) = kurtosis(CLIS_answers(j,1:end-1));
+        CLIS_features(k,10) = rms(CLIS_answers(j,1:end-1));
+        CLIS_features(k,num_features)= CLIS_answers(j,end);
+        k=k+1;
+        j=j+1;
+'''
