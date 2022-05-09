@@ -1,34 +1,42 @@
+import fastica
+
 import fumc
 NUM_OF_ELECTRODES=14
 
-def readDataFromFile(file1,numOfQuestions=20):
+def readDataFromFileAndNormy(file1,numOfQuestions=20):
+    data=[[]]*numOfQuestions
     for i in range(numOfQuestions):
         for j in range(NUM_OF_ELECTRODES):
             data[i][j]=file1.readline()
+            data[i][j]=fumc.normy(data[i][j])
+    return data
 
-
+def callFastICA(data):
+    data=data #temp
 
 
 def main(fileName,numOfQuestions=20):
     file1=open(fileName,'r')
-    data=readDataFromFile(file1,numOfQuestions)
+    data=readDataFromFileAndNormy(file1,numOfQuestions)
     file1.close()
+    callFastICA(data)
 
 
 if __name__ == '__main__':
-    main(fileName,numOfQuestions)
-
+    fileName="recording.csv"
+    main(fileName)
+"""
 # we have a file with the data
 # read from the file and put the data in variables
 # norm the data electrodes.
 #
 #
 #
-a = [1, 2, 3, 4][3, 4, 5, 6]
-for i in range(2, 17):
-    a = fumc.normy(a(i))
 # read electrodes data
 # arrange the data to elecrodes variables.
+"""
+
+"""
 AF3 = a[3]
 F7 = a[4]
 F3 = a[5]
@@ -66,3 +74,5 @@ for i in range(NumOfRunning):
         non - zero
         index1 = (find(marker~=0))';
         val_marker = marker(index1);
+"""
+
