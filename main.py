@@ -11,6 +11,7 @@ NUM_OF_VALUES_FOR_EACH_ELEC = 512
 
 def readDataFromFileAndNormy(file1, numOfQuestions=20):
     data = [[[]] * NUM_OF_ELECTRODES] * numOfQuestions
+    next(file1)
     for i in range(numOfQuestions):
         for j in range(NUM_OF_ELECTRODES):
             data[i][j] = file1.readline()
@@ -20,7 +21,7 @@ def readDataFromFileAndNormy(file1, numOfQuestions=20):
 
 def callFastICA(data, numOfQuestions=20):
     for i in range(numOfQuestions):
-        data[i] = data[i]  # need to do here fast ica
+        data[i] = fastica.doFastICA(data[i])  # need to do here fast ica
     return data
 
 
@@ -44,7 +45,7 @@ def main(fileName, numOfQuestions=20):
 
 
 if __name__ == '__main__':
-    fileName = "recording.csv"
+    fileName = "EEGLogger.csv"
     main(fileName)
 """
 # we have a file with the data
