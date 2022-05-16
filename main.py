@@ -25,6 +25,7 @@ def callFastICA(data, numOfQuestions=20):
     return data
 
 
+
 def statisticalFeatures(data, numOfQuestions=20):
     for i in range(numOfQuestions):
         for j in range(NUM_OF_ELECTRODES):
