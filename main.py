@@ -5,17 +5,39 @@ import fastica
 
 import fumc
 
+import numpy as np
+import pandas as pd
+#import seaborn as sns
+from scipy.stats import skew
+from scipy.stats import kurtosis
+from sklearn.decomposition import FastICA
+from sklearn.model_selection import train_test_split
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import confusion_matrix
+import math
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
+from sklearn.tree import DecisionTreeClassifier
+from matplotlib import pyplot
+
 NUM_OF_ELECTRODES = 14
 NUM_OF_VALUES_FOR_EACH_ELEC = 512
 
 
 def readDataFromFileAndNormy(file1, numOfQuestions=20):
-    data = [[[]] * NUM_OF_ELECTRODES] * numOfQuestions
-    next(file1)
-    for i in range(numOfQuestions):
-        for j in range(NUM_OF_ELECTRODES):
-            data[i][j] = file1.readline()
-            data[i][j] = fumc.normy(data[i][j])
+    I = pd.read_csv(file1, skiprows=1,header=None)# skiprows=1 reads from row 1
+    data = I.iloc[:, 3:17] # reads all the rows from column 3 till 17
+    print(data.shape) #gives me the dimensions of hte matrix
+    #data = [[[]] * NUM_OF_ELECTRODES] * numOfQuestions
+    #next(file1)
+    #for i in range(numOfQuestions):
+    #    for j in range(NUM_OF_ELECTRODES):
+    #        data[i][j] = file1.readline()
+    #        data[i][j] = fumc.normy(data[i][j])
+    for i in range(NUM_OF_ELECTRODES):
+        data[:, i] = fumc.normy(data[:, i])
     return data
 
 
@@ -38,16 +60,33 @@ def callLDA(data, numOfQuestions=20):
 
 
 def main(fileName, numOfQuestions=20):
+    print('41')
     file1 = open(fileName, 'r')
+    print('43')
     data = readDataFromFileAndNormy(file1)
+    print('45')
     file1.close()
+    print('47')
     data = callFastICA(data)
+    print('49')
     data=statisticalFeatures(data)
+    print('51')
+    #data=LDAfunc()
+    #data=SVMfunc()
+    return data
 
 
 if __name__ == '__main__':
+    #doFirsPartOfTheProject read 20 questions
     fileName = "EEGLogger.csv"
-    main(fileName)
+    theRange=main(fileName)
+    #now we start recording every question seperatlly
+    #on every question we record and put it in an other file
+    #then we read from that file and do fastICA on this question
+    #then do if
+
+
+
 """
 # we have a file with the data
 # read from the file and put the data in variables
