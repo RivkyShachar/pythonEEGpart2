@@ -16,7 +16,7 @@ from sklearn.tree import DecisionTreeClassifier
 from matplotlib import pyplot
 
 def doFastICA(EEG_data):
-    ica = FastICA(n_components=14)
+    ica = FastICA(n_components=14,tol=0.1)
     EEG_data = ica.fit_transform(EEG_data)  # Reconstruct signals
     mixing_matrix = ica.mixing_  # Get estimated mixing matrix
     return EEG_data
