@@ -60,8 +60,8 @@ def readDataFromFileAndNormy(file1, numOfQuestions=20):
 
 
 def callFastICA(data, numOfQuestions=20):
-    for i in range(numOfQuestions):
-        data[i] = fastica.doFastICA(data[i])  # need to do here fast ica
+    for x in range(0, data.shape[0], NUM_OF_VALUES_FOR_EACH_ELEC):
+        data[x:x+NUM_OF_VALUES_FOR_EACH_ELEC,:] = fastica.doFastICA(data[x:x+NUM_OF_VALUES_FOR_EACH_ELEC,:])  # need to do here fast ica
     return data
 
 

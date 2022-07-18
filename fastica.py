@@ -19,6 +19,6 @@ def doFastICA(EEG_data):
     ica = FastICA(n_components=14)
     EEG_data = ica.fit_transform(EEG_data)  # Reconstruct signals
     mixing_matrix = ica.mixing_  # Get estimated mixing matrix
-    return mixing_matrix
+    return EEG_data
 
 
