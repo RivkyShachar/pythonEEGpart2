@@ -31,12 +31,13 @@ def readDataFromFileAndNormy(file1, numOfQuestions=20):
     data=I.iloc[:,3:17]
     data = np.array(data, dtype=float)  # reads all the rows from column 3 till 17
     print(data.shape) #gives me the dimensions of hte matrix
-    for x in range(0, data.shape[0], NUM_OF_VALUES_FOR_EACH_ELEC): #data.shape[0] is how many rows there are, meaning how many questions. every question has 512 electrodes
-        for i in range(data.shape[1]):
+    for x in range(0, data.shape[0], NUM_OF_VALUES_FOR_EACH_ELEC): #data.shape[0] is how many rows there are, meaning how many questions. every question has 512 electrodes, we do the normy for every question separately
+        for i in range(data.shape[1]): # loop to do the normy for all the electordes
             data[x:x+NUM_OF_VALUES_FOR_EACH_ELEC,i]=fumc.normy(data[x:x+NUM_OF_VALUES_FOR_EACH_ELEC,i])
-    datawrite=pd.DataFrame(data,rows=['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4'])
-    open('checkEEG.csv','w')
-    datawrite.to_csv('checkEEG.csv')
+    datawrite=pd.DataFrame(data,columns=['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4']) # change the array to data frame format in order to wrtie to csv file
+    datawrite.to_csv('checkEEG.csv',index=False,na_rep='Unknown')# write to s csv file
+    LI=pd.read_csv('checkEEG.csv')
+    print(LI)
 
 
 
@@ -95,7 +96,7 @@ def main(fileName, numOfQuestions=20):
 
 if __name__ == '__main__':
     #doFirsPartOfTheProject read 20 questions
-    fileName = "EEGLoggerNew.csv"
+    fileName = "EEGLogger.csv"
     theRange=main(fileName)
     #now we start recording every question seperatlly
     #on every question we record and put it in an other file
