@@ -23,9 +23,9 @@ def normy(a):
 # print(arr)
 # print("----------")
 # arr.astype(float)
-# b = np.array(normy((arr[:, 1])))
-# arr[:,1]=b
-# print(arr.astype(float))
+# print(arr.shape[0])
+# arr[0:2,1]=normy((arr[0:2, 1]))
+# print(arr)
 
 
 
