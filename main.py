@@ -69,9 +69,10 @@ def callFastICA(data, numOfQuestions=20):
 
 
 def statisticalFeatures(data, numOfQuestions=20):
-    for i in range(numOfQuestions):
+    for x in range(0, data.shape[0], NUM_OF_VALUES_FOR_EACH_ELEC):
         for j in range(NUM_OF_ELECTRODES):
-            data[i][j] = statisticsFunc.features(data[i][j])
+            data[x:x+NUM_OF_VALUES_FOR_EACH_ELEC,j] = statisticsFunc.features(data[x:x+NUM_OF_VALUES_FOR_EACH_ELEC,j])
+            #problem that it gets an array of 10, and supposed to fit in place of 512
 
 def callLDA(data, numOfQuestions=20):
     for i in range(numOfQuestions):
@@ -80,7 +81,7 @@ def callLDA(data, numOfQuestions=20):
 
 
 def main(fileName, numOfQuestions=20):
-    print('411')
+    print('41')
     file1 = open(fileName, 'r')
     print('43')
     data = readDataFromFileAndNormy(file1)

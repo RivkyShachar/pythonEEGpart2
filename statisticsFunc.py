@@ -14,12 +14,12 @@ def features(values):
     statisticsArr[1] = statistics.variance(values)
     statisticsArr[2] = max(values)
     statisticsArr[3] = statistics.mean(values)
-    statisticsArr[4] = pd.skew(values)
+   # statisticsArr[4] = pd.skew(values)
     statisticsArr[5] = np.percentile(values, 25)
     statisticsArr[6] = np.percentile(values, 50)
     statisticsArr[7] = iqr(values)
     statisticsArr[8] = scipy.stats.kurtosis(values)
-    statisticsArr[9] = rms(values)
+    #statisticsArr[9] = rms(values)
     return statisticsArr
 
 
