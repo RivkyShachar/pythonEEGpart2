@@ -80,7 +80,7 @@ def callLDA(data, numOfQuestions=20):
 
 
 def main(fileName, numOfQuestions=20):
-    print('41')
+    print('411')
     file1 = open(fileName, 'r')
     print('43')
     data = readDataFromFileAndNormy(file1)
