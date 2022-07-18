@@ -9,22 +9,23 @@ from numpy import std
 '''def normy(a):
     return list(map(lambda x: (x - mean(a)) / std(a), a))
 '''
-import numpy as np
-
 def normy(a):
-  b = (a-np.mean(a))/(np.std(a))
+  if np.std(a)==0.0:#if all the values are the same std==0
+    b=a-np.mean(a)
+  else:
+    b = (a-np.mean(a))/(np.std(a))
   return b
 
-a=[[5,5,5,5,5],[6,7,8,9,9],[2,2,2,2,2]]
-arr=np.array(a,dtype=float)
-print(arr)
-print(normy(arr[:,1]))
-print(arr)
-print("----------")
-arr.astype(float)
-b = np.array(normy((arr[:, 1])))
-arr[:,1]=b
-print(arr.astype(float))
+# a=[[5,5,5,5,5],[6,7,8,9,9],[2,2,2,2,2]]
+# arr=np.array(a,dtype=float)
+# print(arr)
+# print(normy(arr[:,1]))
+# print(arr)
+# print("----------")
+# arr.astype(float)
+# b = np.array(normy((arr[:, 1])))
+# arr[:,1]=b
+# print(arr.astype(float))
 
 
 

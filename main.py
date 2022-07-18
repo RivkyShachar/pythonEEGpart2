@@ -28,16 +28,23 @@ NUM_OF_VALUES_FOR_EACH_ELEC = 512
 
 def readDataFromFileAndNormy(file1, numOfQuestions=20):
     I = pd.read_csv(file1, skiprows=1,header=None)# skiprows=1 reads from row 1
-    data = I.iloc[:, 3:17] # reads all the rows from column 3 till 17
+
+    data=I.iloc[:,3:17]
+    data = np.array(data, dtype=float)  # reads all the rows from column 3 till 17
     print(data.shape) #gives me the dimensions of hte matrix
-    #data = [[[]] * NUM_OF_ELECTRODES] * numOfQuestions
-    #next(file1)
-    #for i in range(numOfQuestions):
-    #    for j in range(NUM_OF_ELECTRODES):
-    #        data[i][j] = file1.readline()
-    #        data[i][j] = fumc.normy(data[i][j])
-    for i in range(NUM_OF_ELECTRODES):
+    print(data[:,0])
+    data[:,0]=fumc.normy(data[:,0])
+    print(data[:,0])
+    '''data = [[[]] * NUM_OF_ELECTRODES] * numOfQuestions
+    next(file1)
+    for i in range(numOfQuestions):
+        for j in range(NUM_OF_ELECTRODES):
+            data[i][j] = file1.readline()[3:17]
+            #data[i][j] = fumc.normy(data[i][j])'''
+    '''for i in range(NUM_OF_ELECTRODES):
+        print(i)
         data[:, i] = fumc.normy(data[:, i])
+        print(i+'1')'''
     return data
 
 
@@ -78,7 +85,7 @@ def main(fileName, numOfQuestions=20):
 
 if __name__ == '__main__':
     #doFirsPartOfTheProject read 20 questions
-    fileName = "EEGLogger.csv"
+    fileName = "EEGLoggerNew.csv"
     theRange=main(fileName)
     #now we start recording every question seperatlly
     #on every question we record and put it in an other file
